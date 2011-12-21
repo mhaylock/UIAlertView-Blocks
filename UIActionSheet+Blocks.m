@@ -87,7 +87,9 @@ static NSString *RI_DISMISSAL_ACTION_KEY = @"com.random-ideas.DISMISSAL_ACTION";
         NSArray *buttonsArray = objc_getAssociatedObject(self, (__bridge const void *)RI_BUTTON_ASS_KEY);
         RIButtonItem *item = [buttonsArray objectAtIndex:buttonIndex];
         if(item.action)
-            item.action();
+            dispatch_async(dispatch_get_main_queue(), ^{
+                item.action();
+            });
     }
     
     if (self.dismissalAction) self.dismissalAction();
